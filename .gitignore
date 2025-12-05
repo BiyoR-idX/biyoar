@@ -90,7 +90,6 @@ ios/Flutter/plugins.json
 
 # Android
 android/local.properties
-android/gradle.properties
 android/.gradle/
 android/captures/
 android/gradlew
