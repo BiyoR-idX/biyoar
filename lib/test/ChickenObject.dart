@@ -5,6 +5,8 @@ import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_anchor.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
+import 'package:biyoar/Core/Customs/customColors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
@@ -42,8 +44,10 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
 
   // optional: index of currently selected item for measuring/removing
   int? selectedIndex;
-
   double? measuredDistance;
+  
+  //features toogle
+  bool showARFeatures=false;
 
   @override
   void dispose() {
@@ -54,13 +58,27 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Multi-place Object + Measure')),
+    
+      //appBar: AppBar(title: const Text('Multi-place Object + Measure'),backgroundColor: biyorColor   ,),
+      
       body: Stack(
         children: [
           ARView(
             onARViewCreated: onARViewCreated,
             planeDetectionConfig: PlaneDetectionConfig.horizontal,
           ),
+           Positioned(
+        top: 30,   // adjust if needed
+        left: 20,
+        child: SafeArea(
+          
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: whiteColor, size: 30),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ),
+    
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -68,58 +86,89 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // placement buttons
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () =>
-                              onPlaceObjectButtonPressed('chicken'),
-                          child: const Text("Place Chicken"),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => onPlaceObjectButtonPressed('ground'),
-                          child: const Text("Place Ground"),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: onRemoveLastPressed,
-                          child: const Text("Remove Last"),
-                        ),
-                      ),
+                      IconButton(
+                        icon: Icon(showARFeatures ? 
+                        Icons.close : Icons.menu, color: whiteColor, size: 30),
+                        onPressed: () {
+                        setState(() {
+                      showARFeatures = !showARFeatures;
+                                  });
+                                  },
+                                  ),
                     ],
+                  ),
+
+                  // placement buttons
+                  Visibility(
+                    visible:  showARFeatures,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            // style: ElevatedButton.styleFrom(
+                            //   backgroundColor: biyorColor
+                            // ) ,
+                              style: translucentButtonStyle,
+                            onPressed: () =>
+                                onPlaceObjectButtonPressed('chicken'),
+                            child: const Text("Place Chicken"),
+                          ),
+                          
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: translucentButtonStyle,
+                            onPressed: () => onPlaceObjectButtonPressed('ground'),
+                            child: const Text("Place Ground"),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: translucentButtonStyle,
+                            onPressed: onRemoveLastPressed,
+                            child: const Text("Remove Last"),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 8),
 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: onRemoveAllPressed,
-                          child: const Text("Clear All"),
+                  Visibility(
+                    visible: showARFeatures,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: translucentButtonStyle,
+                            onPressed: onRemoveAllPressed,
+                            child: const Text("Clear All"),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: onMeasureToLastPressed,
-                          child: const Text("Measure → Last"),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                             style: translucentButtonStyle,
+                            onPressed: onMeasureToLastPressed,
+                            child: const Text("Measure → Last"),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: onMeasureToSelectedPressed,
-                          child: const Text("Measure → Selected"),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                             style: translucentButtonStyle,
+                            onPressed: onMeasureToSelectedPressed,
+                            child: const Text("Measure → Selected"),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 12),
@@ -128,31 +177,36 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Objects: ${placedItems.length}"),
+                      Text("Objects: ${placedItems.length}",style: TextStyle(color: whiteColor),),
                       const SizedBox(width: 12),
                       Text(
-                          "Selected: ${selectedIndex == null ? '-' : selectedIndex}"),
+                          "Selected: ${selectedIndex == null ? '-' : selectedIndex}",style: TextStyle(color: whiteColor),)
                     ],
                   ),
 
                   const SizedBox(height: 8),
 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => _rotateSelected(-10),
-                          child: const Text("Rotate ⟲ Left"),
+                  Visibility(
+                    visible: showARFeatures,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: translucentButtonStyle,
+                            onPressed: () => _rotateSelected(-10),
+                            child: const Text("Rotate ⟲ Left"),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => _rotateSelected(10),
-                          child: const Text("Rotate ⟳ Right"),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                              style: translucentButtonStyle,
+                            onPressed: () => _rotateSelected(10),
+                            child: const Text("Rotate ⟳ Right"),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 8),
@@ -169,6 +223,7 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          color: whiteColor
                         ),
                       ),
                     ),
@@ -275,6 +330,7 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
       newNode = ARNode(
         type: NodeType.localGLTF2,
         uri: "Models/Beachcourt/scene.gltf",
+        //uri: "Models/BiyorField/biyorfield.gltf",
         scale: vm.Vector3(0.2, 0.2, 0.2),
         position: vm.Vector3(0.0, 0.0, 0.0),
         rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
@@ -431,4 +487,14 @@ class ChickenObjectWidgetState extends State<ChickenObjectWidget> {
     print("🔄 Rotated selected object by $degrees degrees.");
     setState(() {});
   }
+  final ButtonStyle translucentButtonStyle = ElevatedButton.styleFrom(
+  backgroundColor: biyorColor.withOpacity(0.30),
+  foregroundColor: whiteColor,
+  elevation: 0,
+  
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+);
+
 }

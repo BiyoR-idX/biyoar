@@ -41,6 +41,8 @@ dependencies:
   rounded_loading_button: ^2.1.0
   flutter_svg: ^2.0.9
   flutter_bloc: ^8.1.3
+  bloc: ^8.1.2
+  dio: ^5.4.0
   cloud_firestore: ^4.12.2
   equatable: ^2.0.5
   firebase_auth: ^4.12.1
@@ -53,6 +55,8 @@ dependencies:
   geoflutterfire2: ^2.3.15
   meta: ^1.9.1
   geolocator: ^9.0.2
+  package_info_plus: ^4.2.0
+  google_fonts: ^5.1.0
 
 
 dev_dependencies:
@@ -89,7 +93,9 @@ flutter:
     # - Images/triangle.png
     - Models/Chicken_01/
     - Models/Beachcourt/
+    - Models/BiyorField/
     - assets/models/
+    - assets/images/
   #   - assets/fonts/
   # assets:
   # - Images/triangle.png

@@ -1,4 +1,5 @@
-import 'package:arth/admin/ar_example.dart';
+
+import 'package:biyoar/admin/ar_example.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire2/geoflutterfire2.dart';

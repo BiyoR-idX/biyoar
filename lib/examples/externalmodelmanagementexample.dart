@@ -15,7 +15,7 @@ import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
 import 'package:vector_math/vector_math_64.dart' as VectorMath;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
+
 import 'package:geolocator/geolocator.dart';
 
 class ExternalModelManagementWidget extends StatefulWidget {

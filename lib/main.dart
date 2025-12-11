@@ -1,3 +1,6 @@
+import 'package:biyoar/Presentation/Features/Auth/Pages/splashscreen.dart';
+import 'package:biyoar/Presentation/Features/Dashboard/userDashboard.dart';
+import 'package:biyoar/Presentation/Features/Dashboard/userdash2.dart';
 import 'package:biyoar/admin/ar_example.dart';
 import 'package:biyoar/examples/localandwebobjectsexample.dart';
 import 'package:biyoar/examples/objectgesturesexample.dart';
@@ -54,8 +57,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: ChickenObjectWidget(),
+        // appBar: AppBar(title: const Text(_title)),
+        // body: ChickenObjectWidget(),
+         body: SplashScreen()
       ),
     );
     // return MaterialApp(
