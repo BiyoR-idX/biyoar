@@ -1,4 +1,3 @@
-
 import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:flutter/material.dart';
@@ -30,28 +29,33 @@ class _AboutUsPageState extends State<AboutUsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(65),
+        preferredSize: const Size.fromHeight(65),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
           ),
           child: AppBar(
-            title: Center(
-              child: CustomText(
-                text: 'About BiyoR',
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: whiteColor,
+            centerTitle: true,
+            title: const CustomText(
+              text: 'About BiyoR',
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: whiteColor,
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/biyorbgi.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            backgroundColor: biyorColor,
-            elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: whiteColor, size: 30),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              icon: const Icon(Icons.arrow_back, color: whiteColor, size: 30),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
         ),
@@ -61,7 +65,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10),
-          Padding(
+          const Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Text(
               "DandiBiyo is a digital version of the traditional Nepali game that brings the fun and excitement of this classic pastime to your mobile device. "
@@ -75,11 +79,10 @@ class _AboutUsPageState extends State<AboutUsPage> {
           SizedBox(height: 20),
           Center(
             child: CustomText(
-              text: "BiyoR Version: $appVersion",
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: biyorColor,
-            ),
+                text: "BiyoR Version: $appVersion",
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: woodBrown),
           ),
         ],
       ),

@@ -1,4 +1,3 @@
-
 import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:flutter/material.dart';
 
@@ -47,18 +46,15 @@ class CustomButton extends StatelessWidget {
             backgroundColor: color ?? primeColor,
             disabledBackgroundColor:
                 disabledColor ?? Colors.grey, // Set the disabled color
-            disabledForegroundColor:
-                disabledTextColor ??
+            disabledForegroundColor: disabledTextColor ??
                 Colors.white, // Set the disabled text color
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(
-                color:
-                    borderColor ??
+                color: borderColor ??
                     Colors
                         .transparent, // Use borderColor or default to transparent
-                width:
-                    borderWidth ??
+                width: borderWidth ??
                     0, // Use borderWidth or default to 0 (no border)
               ),
             ),

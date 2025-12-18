@@ -1,122 +1,162 @@
+import 'dart:async';
+
 import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:biyoar/Presentation/Features/Pages/aboutUs.dart';
-
+import 'package:biyoar/Presentation/Features/Pages/llmform.dart';
 import 'package:biyoar/Presentation/Features/Pages/toolsandMaterials.dart';
-import 'package:biyoar/test/ChickenObject.dart';
-
+import 'package:biyoar/test/woodenChickenObject.dart';
 import 'package:flutter/material.dart';
 
 class UserDashboardScreen2 extends StatefulWidget {
   const UserDashboardScreen2({super.key});
 
   @override
-  _UserDashboardScreen2State createState() => _UserDashboardScreen2State();
+  State<UserDashboardScreen2> createState() => _UserDashboardScreen2State();
 }
 
 class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
+  bool showDot = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(milliseconds: 600), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      setState(() => showDot = !showDot);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+    final w = MediaQuery.of(context).size.width;
+
+    final buttonHeight = h * 0.075;
+
     return Scaffold(
       body: Stack(
         children: [
-          // ✅ Background: gradient + image
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  biyorColor,
-                  Colors.black,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
+          // 🔹 Background
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/biyorbgi.jpg",
+              fit: BoxFit.cover,
             ),
           ),
 
-          // optional AR-themed overlay image
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.3,
-          //     child: Image.asset(
-          //       "assets/images/triangle.png",
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-
-          // Main content
+          // 🔹 CENTER CONTENT (unchanged alignment)
           Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 70),
-              // Center(
-              //   child: CustomText(
-              //     text: "Scan your ground to begin",
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.bold,
-              //     color: Colors.white,
-              //   ),
-              // ),
+              SizedBox(height: h * 0.08),
 
-              const SizedBox(height: 60),
-
-              // AR DandiBiyo icon/image
-              Image.asset(
-                "assets/images/game.png",
-                height: 200,
-                width: 200,
-              ),
-              const SizedBox(height: 10),
-
-             const Center(
+              const Center(
                 child: CustomText(
-                  text: "AR DandiBiyo",
+                  text: "DandiBiyo",
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-            const  Center(
+
+              Center(
                 child: CustomText(
                   text: "Reviving Tradition Through",
-                  fontSize: 20,
-                  color: Colors.white,
+                  fontSize: 18,
+                  color: Colors.white.withOpacity(0.75),
                 ),
               ),
-              const Center(
+              Center(
                 child: CustomText(
                   text: "Augmented Reality",
-                  fontSize: 20,
-                  color: Colors.white,
+                  fontSize: 18,
+                  color: Colors.white.withOpacity(0.75),
+                ),
+              ),
+
+              SizedBox(height: h * 0.05),
+
+              // 🟡 ICON PERFECTLY CENTERED
+              Center(
+                child: Image.asset(
+                  "assets/images/apicon1.png",
+                  height: 300,
+                  width: 300,
                 ),
               ),
             ],
           ),
 
-          // Bottom buttons
+          // 🔹 BOTTOM BUTTON SECTION
           SafeArea(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 80),
+                padding: EdgeInsets.only(
+                  bottom: 60 + MediaQuery.of(context).padding.bottom,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Start AR button
+                    // 🟢 Fill Form
                     SizedBox(
-                      height: 70,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: buttonHeight,
+                      width: w * 0.9,
                       child: CustomButton(
-                        color: biyorColor.withOpacity(0.3),
-                        child: Row(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const LLMForm(),
+                            ),
+                          );
+                        },
+                        color: woodBrown.withOpacity(0.45),
+                        borderColor: borderColor,
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.camera_alt,
+                            Icon(Icons.psychology,
+                                color: Colors.white, size: 40),
+                            SizedBox(width: 10),
+                            CustomText(
+                              text: "Fill Form",
                               color: Colors.white,
-                              size: 40,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 14),
+
+                    // 🎯 Start BiyoR
+                    SizedBox(
+                      height: buttonHeight,
+                      width: w * 0.9,
+                      child: CustomButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => WoodenChickenObjectWidget(),
+                            ),
+                          );
+                        },
+                        color: woodBrown.withOpacity(0.45),
+                        borderColor: borderColor,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.camera_alt,
+                                color: Colors.white, size: 40),
                             SizedBox(width: 10),
                             CustomText(
                               text: "Start BiyoR",
@@ -126,22 +166,12 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                             ),
                           ],
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => 
-                              ChickenObjectWidget(),
-                        
-                            ),
-                          );
-                        },
                       ),
                     ),
 
-                    const SizedBox(height: 30),
+                    SizedBox(height: h * 0.035),
 
-                    // About Game and Tools/Materials
+                    // 🔧 Tools / About (unchanged)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -152,16 +182,12 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ToolsMaterialsPage(),
+                                    builder: (_) => const ToolsMaterialsPage(),
                                   ),
                                 );
                               },
-                              child: const Icon(
-                                Icons.settings,
-                                color: Colors.white,
-                                size: 40,
-                              ),
+                              child: const Icon(Icons.settings,
+                                  color: Colors.white, size: 40),
                             ),
                             const CustomText(
                               text: "Tools/Materials",
@@ -171,7 +197,6 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                             ),
                           ],
                         ),
-
                         Column(
                           children: [
                             GestureDetector(
@@ -179,18 +204,15 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AboutUsPage(),
+                                    builder: (_) => AboutUsPage(),
                                   ),
                                 );
                               },
-                              child: const Icon(
-                                Icons.info,
-                                color: Colors.white,
-                                size: 40,
-                              ),
+                              child: const Icon(Icons.info,
+                                  color: Colors.white, size: 40),
                             ),
                             const CustomText(
-                              text: "About Game",
+                              text: "About BiyoR",
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

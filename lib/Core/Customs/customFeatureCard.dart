@@ -1,4 +1,3 @@
-
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:flutter/material.dart';
 
@@ -64,14 +63,14 @@ class CustomCards extends StatelessWidget {
               child: customImage != null
                   ? customImage
                   : (icon != null
-                        ? Icon(
-                            icon,
-                            size: iconSize ?? 40,
-                            color: iconColor ?? Colors.black,
-                          )
-                        : (imagePath != null
-                              ? Image.asset(imagePath!, fit: BoxFit.cover)
-                              : Container())),
+                      ? Icon(
+                          icon,
+                          size: iconSize ?? 40,
+                          color: iconColor ?? Colors.black,
+                        )
+                      : (imagePath != null
+                          ? Image.asset(imagePath!, fit: BoxFit.cover)
+                          : Container())),
             ),
             const SizedBox(height: 5),
             CustomText(

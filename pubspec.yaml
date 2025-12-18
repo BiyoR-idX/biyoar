@@ -72,10 +72,12 @@ dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: "biyor_icon"
   ios: true
-  image_path: "assets/favicon.png"
+  image_path: "assets/models/apicon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#6E4B2C"
+ 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,7 +95,8 @@ flutter:
     # - Images/triangle.png
     - Models/Chicken_01/
     - Models/Beachcourt/
-    - Models/BiyorField/
+    - Models/Biyorfield/
+    - Models/Biyo/
     - assets/models/
     - assets/images/
   #   - assets/fonts/

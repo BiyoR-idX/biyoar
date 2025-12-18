@@ -57,10 +57,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        // appBar: AppBar(title: const Text(_title)),
-        // body: ChickenObjectWidget(),
-         body: SplashScreen()
-      ),
+          // appBar: AppBar(title: const Text(_title)),
+          // body: ChickenObjectWidget(),
+          body: SplashScreen()),
     );
     // return MaterialApp(
     //   home: Scaffold(

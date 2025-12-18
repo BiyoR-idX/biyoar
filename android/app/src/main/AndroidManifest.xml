@@ -7,7 +7,7 @@
     <application
         android:label="BiyoAR"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/biyor_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

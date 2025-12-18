@@ -1,4 +1,3 @@
-
 import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
@@ -15,27 +14,29 @@ class UserDashboardScreen extends StatefulWidget {
   _UserDashboardScreenState createState() => _UserDashboardScreenState();
 }
 
-class _UserDashboardScreenState extends State<UserDashboardScreen>with WidgetsBindingObserver {
+class _UserDashboardScreenState extends State<UserDashboardScreen>
+    with WidgetsBindingObserver {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
 
- @override
-void initState() {
-  super.initState();
-  WidgetsBinding.instance.addObserver(this);
-  _initializeCamera();  // first time
-}
-@override
-void didChangeAppLifecycleState(AppLifecycleState state) {
-  if (_controller == null) return;
-
-  if (state == AppLifecycleState.inactive ||
-      state == AppLifecycleState.paused) {
-    _controller!.dispose();       // pause camera
-  } else if (state == AppLifecycleState.resumed) {
-    _initializeCamera();          // resume camera smoothly
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _initializeCamera(); // first time
   }
-}
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_controller == null) return;
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _controller!.dispose(); // pause camera
+    } else if (state == AppLifecycleState.resumed) {
+      _initializeCamera(); // resume camera smoothly
+    }
+  }
 
   Future<void> _initializeCamera() async {
     try {
@@ -65,7 +66,10 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
     return Scaffold(
       backgroundColor: biyorColor,
       body: _controller == null
-          ? const Center(child: CircularProgressIndicator(color: whiteColor,))
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: whiteColor,
+            ))
           : FutureBuilder<void>(
               future: _initializeControllerFuture,
               builder: (context, snapshot) {
@@ -87,16 +91,13 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                       Column(
                         children: [
                           SizedBox(height: 70),
-                          
-                          
-                         
-                         const Center(
+
+                          const Center(
                             child: CustomText(
                               text: "Tap Start BiyoR to begin.",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                              
                             ),
                           ),
 
@@ -108,7 +109,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                             width: 200,
                           ),
                           SizedBox(height: 10),
-                        const  Center(
+                          const Center(
                             child: CustomText(
                               text: "AR DandiBiyo",
                               fontSize: 40,
@@ -124,7 +125,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                               color: Colors.white,
                             ),
                           ),
-                         const Center(
+                          const Center(
                             child: CustomText(
                               text: "Argumented Reality",
                               fontSize: 20,
@@ -178,7 +179,6 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                                               //const StartARBiyoR(),
                                               ChickenObjectWidget(),
                                         ),
-                                      
                                       ).then((_) {
                                         _initializeCamera();
                                       });
@@ -186,7 +186,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                                   ),
                                 ),
 
-                               const SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ), // space between button and row
                                 // About Game and Tools/Materials
@@ -212,7 +212,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                                             size: 40,
                                           ),
                                         ),
-                                      const  CustomText(
+                                        const CustomText(
                                           text: "Tools/Materials",
                                           color: Colors.white,
                                           fontSize: 18,
@@ -220,7 +220,6 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                                         ),
                                       ],
                                     ),
-
                                     Column(
                                       children: [
                                         GestureDetector(
@@ -239,7 +238,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
                                             size: 40,
                                           ),
                                         ),
-                                      const  CustomText(
+                                        const CustomText(
                                           text: "About Game",
                                           color: Colors.white,
                                           fontSize: 18,
@@ -265,7 +264,4 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             ),
     );
   }
-
-  
-  
 }

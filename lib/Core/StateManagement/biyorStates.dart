@@ -8,13 +8,16 @@ abstract class BiyorStates extends Equatable {
 }
 
 class UserInitial extends BiyorStates {}
+
 class UserLoadInProgress extends BiyorStates {} // Loading state
+
 class UserLoadSuccess extends BiyorStates {
   final List<dynamic> users; // Replace dynamic with your actual User model
   const UserLoadSuccess({required this.users});
   @override
   List<Object> get props => [users];
 }
+
 class UserLoadFailure extends BiyorStates {
   final String error;
   const UserLoadFailure({required this.error});
