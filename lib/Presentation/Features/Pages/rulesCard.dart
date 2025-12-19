@@ -1,5 +1,6 @@
 import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
+import 'package:biyoar/Core/Models/game_rule.dart';
 import 'package:biyoar/test/woodenChickenObject.dart';
 import 'package:flutter/material.dart';
 
@@ -53,14 +54,13 @@ class _RulesCardBiyorState extends State<RulesCardBiyor> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       itemCount: state.rules.length,
                       itemBuilder: (context, index) {
-                        final ruleData = state.rules[index];
-                        final title = ruleData['title'] ??
-                            ruleData['category'] ??
-                            'Rule ${index + 1}';
-                        final ruleText = ruleData['rule'] ??
-                            ruleData['description'] ??
-                            ruleData['content'] ??
-                            ruleData.toString();
+                        final GameRule rule = state.rules[index];
+                        final String title = rule.title.isNotEmpty
+                            ? rule.title
+                            : (rule.category.isNotEmpty
+                                ? rule.category
+                                : 'Rule ${index + 1}');
+                        final String ruleText = rule.body;
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),

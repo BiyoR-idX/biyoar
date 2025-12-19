@@ -1,4 +1,5 @@
 import 'package:biyoar/Core/Services/apiService.dart';
+import 'package:biyoar/Core/Models/game_rule.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'biyorEvents.dart';
 import 'biyorStates.dart';
@@ -20,7 +21,12 @@ class GameRulesBloc extends Bloc<BiyorEvents, BiyorStates> {
           players: event.players,
         );
 
-        emit(GameRulesLoaded(data["rules_cards"]));
+        // Parse JSON into typed GameRule objects
+        final List<GameRule> rules = (data["rules_cards"] as List)
+            .map((json) => GameRule.fromJson(json as Map<String, dynamic>))
+            .toList();
+
+        emit(GameRulesLoaded(rules));
       } catch (e) {
         emit(GameRulesError(e.toString()));
       }
