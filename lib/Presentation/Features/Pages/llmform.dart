@@ -3,9 +3,13 @@ import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:biyoar/Core/Customs/customTextForm.dart';
+import 'package:biyoar/Core/StateManagement/biyorEvents.dart';
+import 'package:biyoar/Core/StateManagement/gameRulesBloc.dart';
 import 'package:biyoar/Presentation/Features/Dashboard/userdash2.dart';
+import 'package:biyoar/Presentation/Features/Pages/rulesCard.dart';
 import 'package:biyoar/test/woodenChickenObject.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LLMForm extends StatefulWidget {
   const LLMForm({super.key});
@@ -45,29 +49,6 @@ class _LLMFormState extends State<LLMForm> {
     setState(() {
       _formKey.currentState?.validate();
     });
-  }
-
-  void showNavigationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CustomAlertDialog(
-          title: "Confirmation",
-          content: "Do you want to continue without filling this form?",
-          confirmText: "Yes",
-          cancelText: "No",
-          confirmColor: Colors.green,
-          cancelColor: Colors.red,
-          onConfirm: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UserDashboardScreen2()),
-            );
-          },
-          onCancel: () {},
-        );
-      },
-    );
   }
 
   bool isFormCompletelyEmpty() {
@@ -156,21 +137,50 @@ class _LLMFormState extends State<LLMForm> {
                   SizedBox(
                     height: 10,
                   ),
+                  // CustomTextForm(
+                  //   keyboardType: TextInputType.number,
+                  //   hintText: "enter the diameter of biyo (cm)",
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) return null;
+                  //     final num? v = num.tryParse(value);
+                  //     if (v == null) return 'Enter a valid number';
+                  //     if (v < 1 || v > 10)
+                  //       return 'Biyo diameter must be 1–10 cm';
+                  //     return null;
+                  //   },
+                  //   controller: biyoDiameterController,
+                  // ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
                   CustomTextForm(
                     keyboardType: TextInputType.number,
-                    hintText: "enter the diameter of biyo (cm)",
+                    hintText: "enter the length of field (m)",
                     validator: (value) {
                       if (value == null || value.isEmpty) return null;
                       final num? v = num.tryParse(value);
                       if (v == null) return 'Enter a valid number';
-                      if (v < 1 || v > 10)
-                        return 'Biyo diameter must be 1–10 cm';
+                      if (v < 1 || v > 100)
+                        return 'Field length must be 1–100 m';
                       return null;
                     },
-                    controller: biyoDiameterController,
+                    controller: fieldLengthController,
                   ),
                   SizedBox(
                     height: 10,
+                  ),
+                  CustomTextForm(
+                    keyboardType: TextInputType.number,
+                    hintText: "enter the width of field (m)",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return null;
+                      final num? v = num.tryParse(value);
+                      if (v == null) return 'Enter a valid number';
+                      if (v < 1 || v > 100)
+                        return 'Field width must be 1–100 m';
+                      return null;
+                    },
+                    controller: fieldWidthController,
                   ),
                   SizedBox(
                     height: 65,
@@ -217,35 +227,7 @@ class _LLMFormState extends State<LLMForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomTextForm(
-                    keyboardType: TextInputType.number,
-                    hintText: "enter the length of field (m)",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return null;
-                      final num? v = num.tryParse(value);
-                      if (v == null) return 'Enter a valid number';
-                      if (v < 1 || v > 100)
-                        return 'Field length must be 1–100 m';
-                      return null;
-                    },
-                    controller: fieldLengthController,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextForm(
-                    keyboardType: TextInputType.number,
-                    hintText: "enter the width of field (m)",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return null;
-                      final num? v = num.tryParse(value);
-                      if (v == null) return 'Enter a valid number';
-                      if (v < 1 || v > 100)
-                        return 'Field width must be 1–100 m';
-                      return null;
-                    },
-                    controller: fieldWidthController,
-                  ),
+
                   SizedBox(
                     height: 10,
                   ),
@@ -281,25 +263,47 @@ class _LLMFormState extends State<LLMForm> {
                           borderColor: borderColor,
                           fontsize: 18,
                           onPressed: () {
-                            // ❌ ALL EMPTY → SHOW DIALOG
-                            if (isFormCompletelyEmpty()) {
-                              showNavigationDialog(context);
-                              return;
-                            }
-
-                            // ❌ SOME FILLED BUT INVALID → SHOW ERRORS
+                            // // ❌ SOME FILLED BUT INVALID → SHOW ERRORS
+                            // if (!_formKey.currentState!.validate()) {
+                            //   return;
+                            // }
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (_) => RulesCardBiyor()),
+                            // );
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
 
-                            // ✅ VALID DATA → NAVIGATE
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         WoodenChickenObjectWidget(),
-                            //   ),
-                            // );
+                            // 🔥 ADDED: API trigger via Bloc
+                            context.read<GameRulesBloc>().add(
+                                  FetchGameRules(
+                                    biyoLength: int.tryParse(
+                                            biyoLengthController.text) ??
+                                        10,
+                                    dandiLength: int.tryParse(
+                                            dandilengthController.text) ??
+                                        90,
+                                    fieldLength: int.tryParse(
+                                            fieldLengthController.text) ??
+                                        80,
+                                    fieldWidth: int.tryParse(
+                                            fieldWidthController.text) ??
+                                        70,
+                                    surfaceType: selectedSurface ?? "grass",
+                                    players: int.tryParse(
+                                            numPlayersController.text) ??
+                                        4,
+                                  ),
+                                );
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => RulesCardBiyor(),
+                              ),
+                            );
                           },
                           child: CustomText(
                             text: "Submit",

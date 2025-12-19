@@ -7,20 +7,17 @@ abstract class BiyorStates extends Equatable {
   List<Object> get props => [];
 }
 
-class UserInitial extends BiyorStates {}
+class GameRulesInitial extends BiyorStates {}
 
-class UserLoadInProgress extends BiyorStates {} // Loading state
+class GameRulesLoading extends BiyorStates {}
 
-class UserLoadSuccess extends BiyorStates {
-  final List<dynamic> users; // Replace dynamic with your actual User model
-  const UserLoadSuccess({required this.users});
-  @override
-  List<Object> get props => [users];
+class GameRulesLoaded extends BiyorStates {
+  final List<dynamic> rules;
+
+  GameRulesLoaded(this.rules);
 }
 
-class UserLoadFailure extends BiyorStates {
-  final String error;
-  const UserLoadFailure({required this.error});
-  @override
-  List<Object> get props => [error];
+class GameRulesError extends BiyorStates {
+  final String message;
+  GameRulesError(this.message);
 }

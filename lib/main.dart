@@ -6,11 +6,15 @@ import 'package:biyoar/examples/localandwebobjectsexample.dart';
 import 'package:biyoar/examples/objectgesturesexample.dart';
 import 'package:biyoar/examples/objectsonplanesexample.dart';
 import 'package:biyoar/test/ChickenObject.dart';
+import 'package:biyoar/test/woodenChickenObject.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'examples/screenshotexample.dart';
 import 'package:flutter/services.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:biyoar/Core/Services/apiService.dart';
+import 'package:biyoar/Core/StateManagement/gameRulesBloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,12 +58,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-          // appBar: AppBar(title: const Text(_title)),
-          // body: ChickenObjectWidget(),
-          body: SplashScreen()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GameRulesBloc>(
+          create: (context) => GameRulesBloc(ApiClient()),
+        ),
+      ],
+      child: MaterialApp(
+        title: _title,
+        home: Scaffold(
+          body: SplashScreen(),
+        ),
+        //body: SplashScreen()),
+      ),
     );
     // return MaterialApp(
     //   home: Scaffold(

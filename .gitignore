@@ -109,7 +109,7 @@ android/app/debug
 android/app/profile
 android/app/release
 android/.run
-
+android/gradle.properties
 # Web
 web/.dart_tool/
 web/.packages

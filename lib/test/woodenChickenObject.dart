@@ -414,6 +414,7 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
 
     placedItems.clear();
     selectedIndex = null;
+    measuredDistance = null;
     print("🗑️ All objects removed.");
     setState(() {});
   }
