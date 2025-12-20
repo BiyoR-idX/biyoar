@@ -65,6 +65,62 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
   // Game state from API response
   Map<String, dynamic>? _gameState;
 
+  /// Remove emojis and special unicode characters from text
+  String _stripEmojis(String text) {
+    // Regex pattern to match emojis and special unicode symbols
+    final emojiRegex = RegExp(
+      r'[\u{1F600}-\u{1F64F}]|' // Emoticons
+      r'[\u{1F300}-\u{1F5FF}]|' // Misc Symbols and Pictographs
+      r'[\u{1F680}-\u{1F6FF}]|' // Transport and Map
+      r'[\u{1F700}-\u{1F77F}]|' // Alchemical Symbols
+      r'[\u{1F780}-\u{1F7FF}]|' // Geometric Shapes Extended
+      r'[\u{1F800}-\u{1F8FF}]|' // Supplemental Arrows-C
+      r'[\u{1F900}-\u{1F9FF}]|' // Supplemental Symbols and Pictographs
+      r'[\u{1FA00}-\u{1FA6F}]|' // Chess Symbols
+      r'[\u{1FA70}-\u{1FAFF}]|' // Symbols and Pictographs Extended-A
+      r'[\u{2600}-\u{26FF}]|' // Misc symbols
+      r'[\u{2700}-\u{27BF}]|' // Dingbats
+      r'[\u{231A}-\u{231B}]|' // Watch, Hourglass
+      r'[\u{23E9}-\u{23F3}]|' // Media control symbols
+      r'[\u{23F8}-\u{23FA}]|' // Media control symbols
+      r'[\u{25AA}-\u{25AB}]|' // Squares
+      r'[\u{25B6}]|[\u{25C0}]|' // Play buttons
+      r'[\u{25FB}-\u{25FE}]|' // Squares
+      r'[\u{2614}-\u{2615}]|' // Umbrella, Hot Beverage
+      r'[\u{2648}-\u{2653}]|' // Zodiac
+      r'[\u{267F}]|[\u{2693}]|' // Wheelchair, Anchor
+      r'[\u{26A1}]|[\u{26AA}-\u{26AB}]|' // High Voltage, Circles
+      r'[\u{26BD}-\u{26BE}]|' // Soccer, Baseball
+      r'[\u{26C4}-\u{26C5}]|' // Snowman, Sun
+      r'[\u{26CE}]|[\u{26D4}]|' // Ophiuchus, No Entry
+      r'[\u{26EA}]|[\u{26F2}-\u{26F3}]|' // Church, Fountain, Golf
+      r'[\u{26F5}]|[\u{26FA}]|' // Sailboat, Tent
+      r'[\u{26FD}]|[\u{2702}]|' // Fuel Pump, Scissors
+      r'[\u{2705}]|[\u{2708}-\u{270D}]|' // Check, Airplane, etc.
+      r'[\u{270F}]|[\u{2712}]|' // Pencil, Black Nib
+      r'[\u{2714}]|[\u{2716}]|' // Check, X
+      r'[\u{271D}]|[\u{2721}]|' // Cross, Star of David
+      r'[\u{2728}]|[\u{2733}-\u{2734}]|' // Sparkles, etc.
+      r'[\u{2744}]|[\u{2747}]|' // Snowflake, Sparkle
+      r'[\u{274C}]|[\u{274E}]|' // Cross marks
+      r'[\u{2753}-\u{2755}]|' // Question marks
+      r'[\u{2757}]|[\u{2763}-\u{2764}]|' // Exclamation, Hearts
+      r'[\u{2795}-\u{2797}]|' // Math symbols
+      r'[\u{27A1}]|[\u{27B0}]|' // Arrows
+      r'[\u{27BF}]|[\u{2934}-\u{2935}]|' // Loop, Arrows
+      r'[\u{2B05}-\u{2B07}]|' // Arrows
+      r'[\u{2B1B}-\u{2B1C}]|' // Squares
+      r'[\u{2B50}]|[\u{2B55}]|' // Star, Circle
+      r'[\u{3030}]|[\u{303D}]|' // Wavy dash, etc.
+      r'[\u{3297}]|[\u{3299}]|' // Japanese symbols
+      r'[\u{FE00}-\u{FE0F}]|' // Variation Selectors
+      r'[\u{200D}]', // Zero Width Joiner
+      unicode: true,
+    );
+
+    return text.replaceAll(emojiRegex, '').trim();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -134,12 +190,13 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
       }
 
       if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
+        final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
         final apiResponse = ChatApiResponse.fromJson(jsonResponse);
 
         setState(() {
-          // Add bot response to chat
-          _messages.add(ChatMessage(text: apiResponse.chatText, isUser: false));
+          // Add bot response to chat (strip emojis)
+          _messages.add(ChatMessage(
+              text: _stripEmojis(apiResponse.chatText), isUser: false));
 
           // Update game state
           if (apiResponse.state != null) {
@@ -320,7 +377,10 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
             bottomLeft: isUser ? const Radius.circular(16) : Radius.zero,
             bottomRight: isUser ? Radius.zero : const Radius.circular(16),
           ),
-          border: Border.all(color: borderColor, width: 1.5),
+          border: Border.all(
+            color: isUser ? borderColor : Colors.amber,
+            width: 2,
+          ),
         ),
         child: Text(
           message.text,
@@ -347,7 +407,7 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
             topRight: Radius.circular(16),
             bottomRight: Radius.circular(16),
           ),
-          border: Border.all(color: borderColor, width: 1.5),
+          border: Border.all(color: Colors.orange, width: 1.5),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -381,14 +441,14 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
         bottom: MediaQuery.of(context).padding.bottom + 10,
       ),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-      ),
+          // color: Colors.black.withOpacity(0.3),
+          ),
       child: Row(
         children: [
           Expanded(
             child: TextFormField(
               controller: _messageController,
-              style: const TextStyle(color: Colors.black87),
+              style: TextStyle(color: Colors.black87),
               decoration: InputDecoration(
                 hintText: "Type your message...",
                 hintStyle: TextStyle(color: Colors.grey[600]),
@@ -420,7 +480,7 @@ class _BiyoRScoreCalculationLLMState extends State<BiyoRScoreCalculationLLM> {
           // Send button
           Container(
             decoration: BoxDecoration(
-              color: woodBrown,
+              color: borderColor,
               shape: BoxShape.circle,
             ),
             child: IconButton(
