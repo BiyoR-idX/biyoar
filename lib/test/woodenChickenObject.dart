@@ -366,9 +366,9 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
       // If model is 10m x 10m in Blender and scale is 0.2, actual size = 2m x 2m
       // To align corner at tap point, offset by half the scaled size
       const double groundOffsetX =
-          1.0; // Adjust: half of ground width after scaling
+          0.0; // Adjust: half of ground width after scaling
       const double groundOffsetZ =
-          1.0; // Adjust: half of ground length after scaling
+          0.0; // Adjust: half of ground length after scaling
 
       newNode = ARNode(
         type: NodeType.localGLTF2,
