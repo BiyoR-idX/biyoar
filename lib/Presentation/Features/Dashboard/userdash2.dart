@@ -60,7 +60,7 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
               const Center(
                 child: CustomText(
                   text: "DandiBiyo",
-                  fontSize: 40,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -120,17 +120,22 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                         },
                         color: woodBrown.withOpacity(0.45),
                         borderColor: borderColor,
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.camera_alt,
-                                color: Colors.white, size: 40),
-                            SizedBox(width: 10),
-                            CustomText(
-                              text: "Start BiyoR",
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                            const Icon(Icons.camera_alt,
+                                color: Colors.white, size: 30),
+                            const SizedBox(width: 10),
+                            SizedBox(
+                              width: w * 0.6,
+                              child: Center(
+                                child: CustomText(
+                                  text: "Start BiyoR",
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -154,17 +159,22 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                         },
                         color: woodBrown.withOpacity(0.45),
                         borderColor: borderColor,
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.calculate_outlined,
-                                color: Colors.white, size: 40),
-                            SizedBox(width: 10),
-                            CustomText(
-                              text: "Calculate Score",
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                            const Icon(Icons.calculate_outlined,
+                                color: Colors.white, size: 30),
+                            const SizedBox(width: 10),
+                            SizedBox(
+                              width: w * 0.6,
+                              child: Center(
+                                child: CustomText(
+                                  text: "Score Calculator",
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -176,76 +186,80 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                     const SizedBox(height: 14),
 
                     // 🔧 Tools / About (unchanged)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ToolsMaterialsPage(),
-                                  ),
-                                );
-                              },
-                              child: const Icon(Icons.settings,
-                                  color: Colors.white, size: 40),
-                            ),
-                            const CustomText(
-                              text: "Tools/Materials",
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const BiyorRuleBook(),
-                                  ),
-                                );
-                              },
-                              child: const Icon(Icons.menu_book,
-                                  color: Colors.white, size: 40),
-                            ),
-                            const CustomText(
-                              text: "Rule Book",
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => AboutUsPage(),
-                                  ),
-                                );
-                              },
-                              child: const Icon(Icons.info,
-                                  color: Colors.white, size: 40),
-                            ),
-                            const CustomText(
-                              text: "About BiyoR",
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const ToolsMaterialsPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Icon(Icons.settings,
+                                    color: Colors.white, size: 30),
+                              ),
+                              const CustomText(
+                                text: "Tools/Materials",
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const BiyorRuleBook(),
+                                    ),
+                                  );
+                                },
+                                child: const Icon(Icons.menu_book,
+                                    color: Colors.white, size: 30),
+                              ),
+                              const CustomText(
+                                text: "Rule Book",
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => AboutUsPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Icon(Icons.info,
+                                    color: Colors.white, size: 30),
+                              ),
+                              const CustomText(
+                                text: "About BiyoR",
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
