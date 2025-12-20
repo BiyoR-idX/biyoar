@@ -107,18 +107,18 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                     visible: showARFeatures,
                     child: Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            // style: ElevatedButton.styleFrom(
-                            //   backgroundColor: biyorColor
-                            // ) ,
-                            style: translucentButtonStyle,
-                            onPressed: () =>
-                                onPlaceObjectButtonPressed('chicken'),
-                            child: const Text("Test Anchor"),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
+                        // Expanded(
+                        //   child: ElevatedButton(
+                        //     // style: ElevatedButton.styleFrom(
+                        //     //   backgroundColor: biyorColor
+                        //     // ) ,
+                        //     style: translucentButtonStyle,
+                        //     onPressed: () =>
+                        //         onPlaceObjectButtonPressed('chicken'),
+                        //     child: const Text("Test Anchor"),
+                        //   ),
+                        // ),
+                        // const SizedBox(width: 8),
                         Expanded(
                           child: ElevatedButton(
                             style: translucentButtonStyle,
@@ -162,13 +162,13 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                         //   ),
                         // ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: translucentButtonStyle,
-                            onPressed: onMeasureToSelectedPressed,
-                            child: const Text("Measure Distance → Field"),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: ElevatedButton(
+                        //     style: translucentButtonStyle,
+                        //     onPressed: onMeasureToSelectedPressed,
+                        //     child: const Text("Measure Distance → Field"),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -219,48 +219,48 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                   const SizedBox(height: 8),
 
                   // Scaling buttons
-                  Visibility(
-                    visible: showARFeatures,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: translucentButtonStyle,
-                            onPressed: () => _scaleSelected(-0.1),
-                            child: const Text("Scale - (Smaller)"),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: translucentButtonStyle,
-                            onPressed: () => _scaleSelected(0.1),
-                            child: const Text("Scale + (Larger)"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: showARFeatures,
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //           style: translucentButtonStyle,
+                  //           onPressed: () => _scaleSelected(-0.1),
+                  //           child: const Text("Scale - (Smaller)"),
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 8),
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //           style: translucentButtonStyle,
+                  //           onPressed: () => _scaleSelected(0.1),
+                  //           child: const Text("Scale + (Larger)"),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
-                  const SizedBox(height: 8),
+                  // const SizedBox(height: 8),
 
-                  if (measuredDistance != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        "📏 Distance: ${measuredDistance!.toStringAsFixed(2)} m",
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: whiteColor),
-                      ),
-                    ),
+                  // if (measuredDistance != null)
+                  //   Container(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         vertical: 8, horizontal: 16),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(8),
+                  //     ),
+                  //     child: Text(
+                  //       "📏 Distance: ${measuredDistance!.toStringAsFixed(2)} m",
+                  //       style: const TextStyle(
+                  //           fontSize: 18,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: whiteColor),
+                  //     ),
+                  //   ),
 
-                  const SizedBox(height: 8),
+                  // const SizedBox(height: 8),
 
                   // optional small list to pick an item to measure/remove by index
                   if (placedItems.isNotEmpty)
