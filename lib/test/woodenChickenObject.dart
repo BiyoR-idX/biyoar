@@ -333,12 +333,22 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
         rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
       );
     } else {
+      // Ground model offset - adjust these values based on your model's dimensions
+      // These offsets shift the model so a corner/edge aligns with the tap point
+      // Positive X = shift right, Positive Z = shift forward (away from camera)
+      // If model is 10m x 10m in Blender and scale is 0.2, actual size = 2m x 2m
+      // To align corner at tap point, offset by half the scaled size
+      const double groundOffsetX =
+          1.0; // Adjust: half of ground width after scaling
+      const double groundOffsetZ =
+          1.0; // Adjust: half of ground length after scaling
+
       newNode = ARNode(
         type: NodeType.localGLTF2,
-        // uri: "Models/Beachcourt/scene.gltf",
         uri: "Models/Biyorfield/biyor.gltf",
         scale: vm.Vector3(0.2, 0.2, 0.2),
-        position: vm.Vector3(0.0, 0.0, 0.0),
+        // Position offset moves the model so tap point is at corner, not center
+        position: vm.Vector3(groundOffsetX, 0.0, groundOffsetZ),
         rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
       );
     }
