@@ -366,17 +366,21 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
       // - Field TIP is at X = 15 (Zone_Label_0 is at X = 22)
       // - Field END is at X = 115 (Zone_Label_6 is at X = 107)
       // - Origin (0,0,0) is 15 units BEFORE the tip
+      // - Z axis is centered: -57.5 to +57.1
       //
       // With scale 0.2:
       // - Tip offset from origin = 15 × 0.2 = 3.0 meters
       // - Field length = 100 × 0.2 = 20 meters
+      // - Field width = 115 × 0.2 = 23 meters
       //
-      // To place TIP at anchor point with 180° Y rotation:
-      // Since rotation flips the coordinate system, use POSITIVE offset
+      // SOLUTION: Rotate -90° around Y to orient field toward camera
+      // After -90° Y rotation, the model's +X becomes the camera's +Z (away)
+      // So the field tip (originally at +X=15) now faces +Z (toward user when viewing from above)
+      // Use +Z offset to bring the tip to the anchor after rotation
       //
-      const double groundOffsetX =
-          3.0; // After 180° rotation, positive brings tip to anchor
-      const double groundOffsetZ = 0.0; // Field is centered on Z-axis
+      const double groundOffsetX = 0.0; // After rotation, X becomes Z
+      const double groundOffsetZ =
+          3.0; // Brings tip to anchor (positive = toward user)
 
       newNode = ARNode(
         type: NodeType.localGLTF2,
@@ -384,9 +388,10 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
         scale: vm.Vector3(0.2, 0.2, 0.2),
         // Position offset: brings the tip of the field to the anchor point
         position: vm.Vector3(groundOffsetX, 0.0, groundOffsetZ),
-        // Rotation: 180° around Y-axis (quaternion: x=0, y=1, z=0, w=0)
-        // This flips the field so the tip points TOWARD user (bottom)
-        rotation: vm.Vector4(0.0, 1.0, 0.0, 0.0),
+        // Rotation: -90° around Y-axis (quaternion format: x, y, z, w)
+        // For -90° around Y: (0, sin(-45°), 0, cos(-45°)) = (0, -0.7071, 0, 0.7071)
+        // This rotates the field so it extends toward the camera (tip at bottom)
+        rotation: vm.Vector4(0.0, -0.7071067811865476, 0.0, 0.7071067811865476),
       );
     }
 
