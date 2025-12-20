@@ -115,7 +115,7 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                             style: translucentButtonStyle,
                             onPressed: () =>
                                 onPlaceObjectButtonPressed('chicken'),
-                            child: const Text("Place Biyo"),
+                            child: const Text("Test Anchor"),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -128,13 +128,13 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: translucentButtonStyle,
-                            onPressed: onRemoveLastPressed,
-                            child: const Text("Remove Last"),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: ElevatedButton(
+                        //     style: translucentButtonStyle,
+                        //     onPressed: onRemoveLastPressed,
+                        //     child: const Text("Remove Last"),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -149,23 +149,24 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                           child: ElevatedButton(
                             style: translucentButtonStyle,
                             onPressed: onRemoveAllPressed,
-                            child: const Text("Clear All"),
+                            // child: const Text("Clear All"),
+                            child: const Text("Clear Ground"),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: translucentButtonStyle,
-                            onPressed: onMeasureToLastPressed,
-                            child: const Text("Measure → Last"),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: ElevatedButton(
+                        //     style: translucentButtonStyle,
+                        //     onPressed: onMeasureToLastPressed,
+                        //     child: const Text("Measure → Last"),
+                        //   ),
+                        // ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: ElevatedButton(
                             style: translucentButtonStyle,
                             onPressed: onMeasureToSelectedPressed,
-                            child: const Text("Measure → Selected"),
+                            child: const Text("Measure Distance → Field"),
                           ),
                         ),
                       ],
@@ -209,6 +210,32 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
                             style: translucentButtonStyle,
                             onPressed: () => _rotateSelected(10),
                             child: const Text("Rotate ⟳ Right"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Scaling buttons
+                  Visibility(
+                    visible: showARFeatures,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: translucentButtonStyle,
+                            onPressed: () => _scaleSelected(-0.1),
+                            child: const Text("Scale - (Smaller)"),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: translucentButtonStyle,
+                            onPressed: () => _scaleSelected(0.1),
+                            child: const Text("Scale + (Larger)"),
                           ),
                         ),
                       ],
@@ -502,6 +529,37 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
     node.transformNotifier.value = node.transformNotifier.value;
 
     print("🔄 Rotated selected object by $degrees degrees.");
+    setState(() {});
+  }
+
+  /// Scale the selected object by a delta amount (e.g., 0.1 or -0.1)
+  /// Positive delta = increase size, Negative delta = decrease size
+  Future<void> _scaleSelected(double delta) async {
+    if (selectedIndex == null) {
+      print("❌ No object selected for scaling.");
+      return;
+    }
+
+    final item = placedItems[selectedIndex!];
+    final node = item.node;
+
+    // Get current scale
+    final currentScale = node.scale;
+
+    // Calculate new scale (ensure minimum scale of 0.05 to prevent disappearing)
+    final newScaleValue = (currentScale.x + delta).clamp(0.05, 5.0);
+
+    // Apply uniform scaling on all axes
+    final newScale = vm.Vector3(newScaleValue, newScaleValue, newScaleValue);
+
+    // Assign new scale
+    node.scale = newScale;
+
+    // Force notifier update to reflect changes
+    node.transformNotifier.value = node.transformNotifier.value;
+
+    print(
+        "📐 Scaled selected object. New scale: ${newScaleValue.toStringAsFixed(2)}");
     setState(() {});
   }
 
