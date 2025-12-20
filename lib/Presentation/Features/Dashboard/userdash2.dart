@@ -5,6 +5,7 @@ import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:biyoar/Presentation/Features/Pages/aboutUs.dart';
 import 'package:biyoar/Presentation/Features/Pages/llmform.dart';
+import 'package:biyoar/Presentation/Features/Pages/scoreCalculationBiyor.dart';
 import 'package:biyoar/Presentation/Features/Pages/toolsandMaterials.dart';
 import 'package:biyoar/Presentation/Features/Pages/userFormA.dart';
 import 'package:biyoar/test/woodenChickenObject.dart';
@@ -104,37 +105,37 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // 🟢 Fill Form
-                    // SizedBox(
-                    //   height: buttonHeight,
-                    //   width: w * 0.9,
-                    //   child: CustomButton(
-                    //     onPressed: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //           builder: (_) => const LLMForm(),
-                    //         ),
-                    //       );
-                    //     },
-                    //     color: woodBrown.withOpacity(0.45),
-                    //     borderColor: borderColor,
-                    //     child: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.psychology,
-                    //             color: Colors.white, size: 40),
-                    //         SizedBox(width: 10),
-                    //         CustomText(
-                    //           text: "Fill Form",
-                    //           color: Colors.white,
-                    //           fontSize: 30,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    //🟢 Fill Form
+                    SizedBox(
+                      height: buttonHeight,
+                      width: w * 0.9,
+                      child: CustomButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BiyoRScoreCalculationLLM(),
+                            ),
+                          );
+                        },
+                        color: woodBrown.withOpacity(0.45),
+                        borderColor: borderColor,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.calculate,
+                                color: Colors.white, size: 40),
+                            SizedBox(width: 10),
+                            CustomText(
+                              text: "Calculate Score",
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
 
                     const SizedBox(height: 14),
 

@@ -51,7 +51,7 @@ class _RulesCardBiyorState extends State<RulesCardBiyor> {
                               color: Colors.white));
                     }
                     return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 1),
                       itemCount: state.rules.length,
                       itemBuilder: (context, index) {
                         final GameRule rule = state.rules[index];
