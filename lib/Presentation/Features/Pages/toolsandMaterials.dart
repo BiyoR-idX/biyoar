@@ -58,44 +58,49 @@ class _ToolsMaterialsPageState extends State<ToolsMaterialsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Heading
-                buildHeading("Dandi (Large Stick)"),
-                buildBullet("Length: 1–2 feet (30–60 cm)"),
-                buildBullet("Material: Wood, sturdy enough to strike the Biyo"),
+                buildHeading("Dandi"),
+                buildBullet("Length: 45 cm"),
                 buildBullet(
-                    "Purpose: Used to hit the small stick and send it flying"),
+                    "Material: Sturdy wood suitable for hitting the Biyo"),
+                buildBullet(
+                    "Purpose: Used by the hitter to strike the Biyo and send it flying"),
 
                 const SizedBox(height: 20),
 
-                buildHeading("Biyo (Small Stick)"),
-                buildBullet("Length: 3–4 inches (7–10 cm)"),
-                buildBullet("Material: Wood, lightweight"),
+                buildHeading("Biyo"),
+                buildBullet("Length: 15 cm"),
+                buildBullet("Material: Lightweight wood"),
                 buildBullet(
-                    "Purpose: The target stick that players strike and try to hit far"),
+                    "Purpose: The target stick to be hit; distance determines Landing Zone score"),
 
                 const SizedBox(height: 20),
 
                 buildHeading("Playing Area"),
-                buildBullet("Flat and open space (ground or grass)"),
-                buildBullet("Enough area to allow the Biyo to travel safely"),
+                buildBullet(
+                    "Size: ~10 m field length, central square with connecting paths and fan-shaped landing zones"),
+                buildBullet("Surface: Flat ground or grass"),
+                buildBullet(
+                    "Purpose: Provides sufficient space for safe Hutnu and Tyak play"),
 
                 const SizedBox(height: 20),
 
                 buildHeading("Markers"),
-                buildBullet("Starting point for placing the Biyo"),
-                buildBullet("Distance measuring points"),
-                buildBullet("Boundaries or scoring zones"),
+                buildBullet(
+                    "Starting Point: Khop location for placing the Biyo"),
+                buildBullet(
+                    "Scoring Zones: Fan-shaped landing zones (Zone 0–6) and Safe Zones (1–3 on each path)"),
+                buildBullet("Boundaries: Outside Zone 6 counts as OUT"),
 
                 const SizedBox(height: 20),
 
                 buildHeading("Measuring Tool"),
-                buildBullet("Ruler, tape, or using steps / Dandi lengths"),
-                buildBullet(
-                    "(Our app can measure Biyo distance automatically—no ruler needed!)"),
+                buildBullet("Optional: Ruler or tape (for traditional play)"),
 
                 const SizedBox(height: 20),
 
                 buildHeading("Players"),
-                buildBullet("Minimum 2 players or 2 teams"),
+                buildBullet("Minimum: 5 players (For each team)"),
+                buildBullet("Team Size: 5 active players, 2 substitutes"),
               ],
             ),
           ),
