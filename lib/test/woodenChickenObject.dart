@@ -360,38 +360,30 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
         rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
       );
     } else {
-      // Ground model offset - ANALYZED from biyor.gltf accessors:
+      // NEW MODEL ANALYSIS (updated biyor.gltf):
       //
-      // DandiBiyo_Fan bounds: X = 15.0 → 115.0 (Blender units)
-      // - Field TIP is at X = 15 (Zone_Label_0 is at X = 22)
-      // - Field END is at X = 115 (Zone_Label_6 is at X = 107)
-      // - Origin (0,0,0) is 15 units BEFORE the tip
-      // - Z axis is centered: -57.5 to +57.1
+      // Model has origin at the TIP (Y=0), field extends to Y=-100
+      // X-axis centered (±57 units), Z-axis flat (~0)
       //
-      // With scale 0.2:
-      // - Tip offset from origin = 15 × 0.2 = 3.0 meters
-      // - Field length = 100 × 0.2 = 20 meters
-      // - Field width = 115 × 0.2 = 23 meters
+      // After glTF export, with 90° Y rotation:
+      // - Model's -Y becomes -Z in AR (away from camera)
+      // - Tip (Y=0) stays at origin
+      // - Field extends in -Z direction (away from user)
       //
-      // SOLUTION: Rotate -90° around Y to orient field toward camera
-      // After -90° Y rotation, the model's +X becomes the camera's +Z (away)
-      // So the field tip (originally at +X=15) now faces +Z (toward user when viewing from above)
-      // Use +Z offset to bring the tip to the anchor after rotation
+      // NO OFFSET NEEDED - origin is already at the tip!
       //
-      const double groundOffsetX = 0.0; // After rotation, X becomes Z
-      const double groundOffsetZ =
-          3.0; // Brings tip to anchor (positive = toward user)
+      const double groundOffsetX = 0.0;
+      const double groundOffsetZ = 0.0;
 
       newNode = ARNode(
         type: NodeType.localGLTF2,
         uri: "Models/Biyorfield/biyor.gltf",
         scale: vm.Vector3(0.2, 0.2, 0.2),
-        // Position offset: brings the tip of the field to the anchor point
+        // No position offset needed - model origin is at the field tip
         position: vm.Vector3(groundOffsetX, 0.0, groundOffsetZ),
-        // Rotation: -90° around Y-axis (quaternion format: x, y, z, w)
-        // For -90° around Y: (0, sin(-45°), 0, cos(-45°)) = (0, -0.7071, 0, 0.7071)
-        // This rotates the field so it extends toward the camera (tip at bottom)
-        rotation: vm.Vector4(0.0, -0.7071067811865476, 0.0, 0.7071067811865476),
+        // Rotation: 90° around Y-axis to orient field away from camera
+        // Quaternion (0, sin(45°), 0, cos(45°)) = (0, 0.7071, 0, 0.7071)
+        rotation: vm.Vector4(0.0, 0.7071067811865476, 0.0, 0.7071067811865476),
       );
     }
 
