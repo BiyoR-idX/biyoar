@@ -4,6 +4,7 @@ import 'package:biyoar/Core/Customs/customColors.dart';
 import 'package:biyoar/Core/Customs/customElevatedButton.dart';
 import 'package:biyoar/Core/Customs/customText.dart';
 import 'package:biyoar/Presentation/Features/Pages/aboutUs.dart';
+import 'package:biyoar/Presentation/Features/Pages/BiyorRuleBook.dart';
 import 'package:biyoar/Presentation/Features/Pages/llmform.dart';
 import 'package:biyoar/Presentation/Features/Pages/scoreCalculationBiyor.dart';
 import 'package:biyoar/Presentation/Features/Pages/toolsandMaterials.dart';
@@ -194,6 +195,28 @@ class _UserDashboardScreen2State extends State<UserDashboardScreen2> {
                             ),
                             const CustomText(
                               text: "Tools/Materials",
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const BiyorRuleBook(),
+                                  ),
+                                );
+                              },
+                              child: const Icon(Icons.menu_book,
+                                  color: Colors.white, size: 40),
+                            ),
+                            const CustomText(
+                              text: "Rule Book",
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

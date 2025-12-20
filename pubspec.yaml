@@ -57,6 +57,7 @@ dependencies:
   geolocator: ^9.0.2
   package_info_plus: ^4.2.0
   google_fonts: ^5.1.0
+  pdfx: ^2.4.0
 
 
 dev_dependencies:
@@ -99,6 +100,7 @@ flutter:
     - Models/Biyo/
     - assets/models/
     - assets/images/
+    - assets/pdf/
   #   - assets/fonts/
   # assets:
   # - Images/triangle.png
