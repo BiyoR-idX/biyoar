@@ -360,23 +360,33 @@ class WoodenChickenObjectWidgetState extends State<WoodenChickenObjectWidget> {
         rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
       );
     } else {
-      // Ground model offset - adjust these values based on your model's dimensions
-      // These offsets shift the model so a corner/edge aligns with the tap point
-      // Positive X = shift right, Positive Z = shift forward (away from camera)
-      // If model is 10m x 10m in Blender and scale is 0.2, actual size = 2m x 2m
-      // To align corner at tap point, offset by half the scaled size
+      // Ground model offset - ANALYZED from biyor.gltf accessors:
+      //
+      // DandiBiyo_Fan bounds: X = 15.0 → 115.0 (Blender units)
+      // - Field TIP is at X = 15 (Zone_Label_0 is at X = 22)
+      // - Field END is at X = 115 (Zone_Label_6 is at X = 107)
+      // - Origin (0,0,0) is 15 units BEFORE the tip
+      //
+      // With scale 0.2:
+      // - Tip offset from origin = 15 × 0.2 = 3.0 meters
+      // - Field length = 100 × 0.2 = 20 meters
+      //
+      // To place TIP at anchor point with 180° Y rotation:
+      // Since rotation flips the coordinate system, use POSITIVE offset
+      //
       const double groundOffsetX =
-          0.0; // Adjust: half of ground width after scaling
-      const double groundOffsetZ =
-          0.0; // Adjust: half of ground length after scaling
+          3.0; // After 180° rotation, positive brings tip to anchor
+      const double groundOffsetZ = 0.0; // Field is centered on Z-axis
 
       newNode = ARNode(
         type: NodeType.localGLTF2,
         uri: "Models/Biyorfield/biyor.gltf",
         scale: vm.Vector3(0.2, 0.2, 0.2),
-        // Position offset moves the model so tap point is at corner, not center
+        // Position offset: brings the tip of the field to the anchor point
         position: vm.Vector3(groundOffsetX, 0.0, groundOffsetZ),
-        rotation: vm.Vector4(1.0, 0.0, 0.0, 0.0),
+        // Rotation: 180° around Y-axis (quaternion: x=0, y=1, z=0, w=0)
+        // This flips the field so the tip points TOWARD user (bottom)
+        rotation: vm.Vector4(0.0, 1.0, 0.0, 0.0),
       );
     }
 
