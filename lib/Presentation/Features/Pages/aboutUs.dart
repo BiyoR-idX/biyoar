@@ -38,7 +38,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
           child: AppBar(
             centerTitle: true,
             title: const CustomText(
-              text: 'About BiyoR',
+              text: 'About DandiBiyo',
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: whiteColor,
